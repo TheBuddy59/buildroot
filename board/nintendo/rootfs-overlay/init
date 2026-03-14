@@ -1,0 +1,14 @@
+#!/bin/sh
+#initial required mounts
+mount -t devtmpfs devtmpfs /dev
+mount -t proc proc /proc
+mount -t sysfs sysfs /sys
+#activate swap and real root
+swapon /dev/vda3
+mkdir -p /mnt/root
+mount /dev/vda2 /mnt/root
+#switch to root
+mount -t devtmpfs devtmpfs /mnt/root/dev
+mount -t proc proc /mnt/root/proc
+mount -t sysfs sysfs /mnt/root/sys
+exec switch_root /mnt/root /sbin/init
